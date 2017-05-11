@@ -3,6 +3,11 @@ class BoardsController < ApplicationController
     render json: Board.all
   end
 
+  # def show
+  #   board = Board.find_or_create_by(params[:id])
+  #   render json: Board.all
+  # end
+
   def create
     board = Board.new()
     board.status = params[:status].values
