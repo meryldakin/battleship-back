@@ -1,4 +1,7 @@
 class BoardsController < ApplicationController
+  def index
+    render json: Board.all
+  end
 
   def create
     board = Board.new()
@@ -8,8 +11,9 @@ class BoardsController < ApplicationController
   end
 
   def update
-    board = Board.find()
-
+    board = Board.find(params[:id])
+    board.status = params[:status].values
+    render json: board
   end
 
   private
