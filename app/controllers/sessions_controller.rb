@@ -10,7 +10,6 @@ class SessionsController < ApplicationController
     user = User.find_by(username: params[:username])
     if user.present? && user.authenticate(params[:password])
       board = Board.find_by(user_id: user.id, game_result: 0)
-      binding.pry
       if !board
         board = Board.create(user_id: user.id, game_result: 0, ammo: 50)
         board.save
@@ -18,7 +17,8 @@ class SessionsController < ApplicationController
       else
         session[:user_id] = user.id
         session[:board_id] = board.id
-        render json: {user_id: user.id, board_id: board.id} 
+        session[:board_ships] = board.ship
+        render json: {user_id: user.id, board_id: board.id, board_ships: board.ship} 
       end
     else
       render json: {error: "user not found"}
